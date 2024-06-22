@@ -18,14 +18,31 @@ import {
 import { writeJVLog } from "../utils/writeJVLog.js";
 import { Source, MovieData } from "../types/index";
 
-export async function getJavdbData(
-  url: string | null
-): Promise<MovieData | null> {
+export async function getJavdbData(url: string | null): Promise<MovieData> {
   if (!url) {
     return null;
   }
   const source: Source = "javdb";
-  let movieDataObject: MovieData = {};
+  let movieDataObject: MovieData = {
+    Source: source,
+    Url: url,
+    Id: null,
+    ContentId: null,
+    Title: null,
+    Description: null,
+    ReleaseDate: null,
+    ReleaseYear: null,
+    Runtime: null,
+    Series: null,
+    Maker: null,
+    Rating: null,
+    Directors: null,
+    Actress: null,
+    Genre: null,
+    CoverUrl: null,
+    ScreenshotUrl: null,
+    TrailerUrl: null,
+  };
 
   try {
     writeJVLog("Debug", `[${source}] Performing on URL [${url}]`);
@@ -35,6 +52,7 @@ export async function getJavdbData(
       Source: source,
       Url: url,
       Id: getJavdbId(webContent),
+      ContentId: getJavdbId(webContent),
       Title: getJavdbTitle(webContent),
       Description: null,
       ReleaseDate: getJavdbReleaseDate(webContent),

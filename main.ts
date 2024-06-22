@@ -2,6 +2,8 @@
 import { getJVItem } from "./src/utils/getItem";
 import { getJav321 } from "./src/fetcher/getJav321";
 import { getJavdb } from "./src/fetcher/getJavdb";
+import { getJVAggregatedData } from "./src/utils/getJVAggregatedData";
+import { settings } from "./src/utils/settings";
 
 (async () => {
   const examplePath = "/mnt/f/JAV/Test";
@@ -16,5 +18,6 @@ import { getJavdb } from "./src/fetcher/getJavdb";
   const results = await getJVItem(examplePath, getItemOptions);
   results.forEach(async (result) => {
     const data = await Promise.all([getJav321(result.Id), getJavdb(result.Id)]);
+    getJVAggregatedData({ data, settings });
   });
 })();

@@ -16,14 +16,31 @@ import {
 import { writeJVLog } from "../utils/writeJVLog.js";
 import { Source, MovieData } from "../types/index";
 
-export async function getJav321Data(
-  url: string | null
-): Promise<MovieData | null> {
+export async function getJav321Data(url: string | null): Promise<MovieData> {
   if (!url) {
     return null;
   }
   const source: Source = "jav321";
-  let movieDataObject: MovieData = {};
+  let movieDataObject: MovieData = {
+    Source: source,
+    Url: url,
+    Id: null,
+    ContentId: null,
+    Title: null,
+    Description: null,
+    ReleaseDate: null,
+    ReleaseYear: null,
+    Runtime: null,
+    Series: null,
+    Maker: null,
+    Rating: null,
+    Directors: null,
+    Actress: null,
+    Genre: null,
+    CoverUrl: null,
+    ScreenshotUrl: null,
+    TrailerUrl: null,
+  };
 
   try {
     writeJVLog("Debug", `[${source}] Performing on URL [${url}]`);
@@ -34,6 +51,7 @@ export async function getJav321Data(
       Source: source,
       Url: url,
       Id: getJav321Id(webContent),
+      ContentId: getJav321Id(webContent),
       Title: getJav321Title(webContent),
       Description: getJav321Description(webContent),
       ReleaseDate: getJav321ReleaseDate(webContent),
@@ -41,10 +59,13 @@ export async function getJav321Data(
       Runtime: getJav321Runtime(webContent),
       Series: getJav321Series(webContent),
       Maker: getJav321Maker(webContent),
+      Rating: null,
+      Directors: null,
       Actress: getJav321Actress(webContent),
       Genre: getJav321Genre(webContent),
       CoverUrl: getJav321CoverUrl(webContent),
       ScreenshotUrl: getJav321ScreenshotUrl(webContent),
+      TrailerUrl: null,
     };
 
     writeJVLog(

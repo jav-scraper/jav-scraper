@@ -84,13 +84,13 @@ export function getJav321Actress(webContent: string): Actress[] {
   }));
 }
 
-export function getJav321CoverUrl(webContent: string) {
+export function getJav321CoverUrl(webContent: string): string | null {
   const regex =
     /"\/snapshot\/.*?\/\d\/0"><img class="img-responsive" max-width="100%" src="(.*?)"/;
   return extractValue(regex, webContent)?.split('" onerror')[0].trim();
 }
 
-export function getJav321ScreenshotUrl(webContent: string) {
+export function getJav321ScreenshotUrl(webContent: string): string[] | null {
   const regex =
     /<a href="\/snapshot\/.*?\/.*?\/.*?"><img class="img-responsive" max-width="100%" src="(.*?)"/g;
   const matches = [...webContent.matchAll(regex)];

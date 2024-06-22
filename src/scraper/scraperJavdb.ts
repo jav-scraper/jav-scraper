@@ -1,4 +1,5 @@
 import { JSDOM } from "jsdom";
+import { Actress, Rating } from "../types";
 
 function extractTextContent3(webContent: string, selector: string) {
   const doc = new JSDOM(webContent).window.document;
@@ -64,45 +65,45 @@ function validation(
   }
 }
 
-export function getJavdbId(webContent: string) {
+export function getJavdbId(webContent: string): string | null {
   return extractTextContent(webContent, "h2.title strong");
 }
 
-export function getJavdbTitle(webContent: string) {
+export function getJavdbTitle(webContent: string): string | null {
   return extractTextContent(webContent, "h2.title .current-title");
 }
 
-export function getJavdbReleaseDate(webContent: string) {
+export function getJavdbReleaseDate(webContent: string): string | null {
   const value = extractTextContent2(webContent, "Released Date:");
   return validation(value, /(\d{4}-\d{2}-\d{2})/);
 }
 
-export function getJavdbReleaseYear(webContent: string) {
+export function getJavdbReleaseYear(webContent: string): string | null {
   const releaseDate = getJavdbReleaseDate(webContent);
   return releaseDate ? releaseDate.split("-")[0] : null;
 }
 
-export function getJavdbRuntime(webContent: string) {
+export function getJavdbRuntime(webContent: string): string | null {
   const value = extractTextContent2(webContent, "Duration:");
   return validation(value, /(\d*) (分鍾|minute\(s\))/);
 }
 
-export function getJavdbDirector(webContent: string) {
+export function getJavdbDirector(webContent: string): string | null {
   const value = extractTextContent2(webContent, "Director:");
   return value;
 }
 
-export function getJavdbMaker(webContent: string) {
+export function getJavdbMaker(webContent: string): string | null {
   const value = extractTextContent2(webContent, "Maker:");
   return value;
 }
 
-export function getJavdbSeries(webContent: string) {
+export function getJavdbSeries(webContent: string): string | null {
   const value = extractTextContent2(webContent, "Series:");
   return value;
 }
 
-export function getJavdbRating(webContent: string) {
+export function getJavdbRating(webContent: string): Rating | null {
   const value = extractTextContent2(webContent, "Rating:");
   const rating = validation(value, /(\d*\.\d*)分?, \D*(\d*)\D*/);
   if (rating) {
@@ -115,12 +116,12 @@ export function getJavdbRating(webContent: string) {
   }
 }
 
-export function getJavdbGenre(webContent: string) {
+export function getJavdbGenre(webContent: string): string[] | null {
   const genres = extractTextContent3(webContent, "Tags:");
   return genres?.length ? genres : null;
 }
 
-export function getJavdbActress(webContent: string) {
+export function getJavdbActress(webContent: string): Actress[] | null {
   const actresses = extractTextContent3(webContent, "Actor(s):");
   return actresses?.map((actress) => ({
     LastName: null,
@@ -130,20 +131,20 @@ export function getJavdbActress(webContent: string) {
   }));
 }
 
-export function getJavdbCoverUrl(webContent: string) {
+export function getJavdbCoverUrl(webContent: string): string | null {
   const doc = new JSDOM(webContent).window.document;
   const element = doc.querySelector("img.video-cover");
   return element?.getAttribute("src");
 }
 
-export function getJavdbScreenshotUrl(webContent: string) {
+export function getJavdbScreenshotUrl(webContent: string): string[] | null {
   const doc = new JSDOM(webContent).window.document;
   return Array.from(
     doc.querySelectorAll('a.tile-item[data-fancybox="gallery"]')
   ).map((element) => element.getAttribute("href"));
 }
 
-export function getJavdbTrailerUrl(webContent: string) {
+export function getJavdbTrailerUrl(webContent: string): string | null {
   const doc = new JSDOM(webContent).window.document;
   const element = doc.querySelector("video source");
   const trailerUrl = element?.getAttribute("src");

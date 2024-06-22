@@ -37,22 +37,28 @@ export type Actress = {
   ThumbUrl: null;
 };
 export type Source = "jav321" | "javdb";
-export type MovieData =
-  | {
-      Source: Source;
-      Url: string;
-      Id: string | null;
-      Title: string | null;
-      Description: string | null;
-      ReleaseDate: string | null;
-      ReleaseYear: string | null;
-      Runtime: string | null;
-      Series: string[] | null;
-      Maker: string | null;
-      Actress: string[] | null;
-      Genre: string[] | null;
-      CoverUrl: string | null;
-      ScreenshotUrl: string[] | null;
-    }
-  | {};
+export type MovieData = {
+  Source: Source;
+  Url: string;
+  Id: string | null;
+  ContentId: string | null;
+  Title: string | null;
+  Description: string | null;
+  ReleaseDate: string | null;
+  ReleaseYear: string | null;
+  Runtime: string | null;
+  Series: string | null;
+  Maker: string | null;
+  Rating: Rating | null;
+  Directors: string | null;
+  Actress: Actress[] | null;
+  Genre: string[] | null;
+  CoverUrl: string | null;
+  ScreenshotUrl: string[] | null;
+  TrailerUrl: string | null;
+};
 export type Settings = {};
+export type Rating = {
+  Rating: number;
+  Votes: null;
+};
