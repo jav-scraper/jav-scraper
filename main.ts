@@ -18,6 +18,7 @@ import { settings } from "./src/utils/settings";
   const results = await getJVItem(examplePath, getItemOptions);
   results.forEach(async (result) => {
     const data = await Promise.all([getJav321(result.Id), getJavdb(result.Id)]);
-    getJVAggregatedData({ data, settings });
+    const aggregatedData = getJVAggregatedData({ data, settings });
+    console.log(aggregatedData);
   });
 })();

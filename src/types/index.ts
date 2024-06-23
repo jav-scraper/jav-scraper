@@ -43,6 +43,7 @@ export type MovieData = {
   Id: string | null;
   ContentId: string | null;
   Title: string | null;
+  AlternateTitle: string | null;
   Description: string | null;
   ReleaseDate: string | null;
   ReleaseYear: string | null;

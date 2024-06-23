@@ -5,23 +5,23 @@ import { MovieData } from "../types/index";
 type Options = {
   data: MovieData[];
   settings: any;
-  actressPriority?: string[];
-  alternateTitlePriority?: string[];
-  coverUrlPriority?: string[];
-  descriptionPriority?: string[];
-  directorPriority?: string[];
-  genrePriority?: string[];
-  idPriority?: string[];
-  contentIdPriority?: string[];
-  labelPriority?: string[];
-  makerPriority?: string[];
-  ratingPriority?: string[];
-  releaseDatePriority?: string[];
-  runtimePriority?: string[];
-  seriesPriority?: string[];
-  screenshotUrlPriority?: string[];
-  titlePriority?: string[];
-  trailerUrlPriority?: string[];
+  ActressPriority?: string[];
+  AlternateTitlePriority?: string[];
+  CoverUrlPriority?: string[];
+  DescriptionPriority?: string[];
+  DirectorPriority?: string[];
+  GenrePriority?: string[];
+  IdPriority?: string[];
+  ContentIdPriority?: string[];
+  LabelPriority?: string[];
+  MakerPriority?: string[];
+  RatingPriority?: string[];
+  ReleaseDatePriority?: string[];
+  RuntimePriority?: string[];
+  SeriesPriority?: string[];
+  ScreenshotUrlPriority?: string[];
+  TitlePriority?: string[];
+  TrailerUrlPriority?: string[];
   displayNameFormat?: string;
   firstNameOrder?: string;
   thumbCsv?: boolean;
@@ -56,71 +56,31 @@ export function getJVAggregatedData(options: Options) {
   let {
     data,
     settings,
-    actressPriority,
-    alternateTitlePriority,
-    coverUrlPriority,
-    descriptionPriority,
-    directorPriority,
-    genrePriority,
-    idPriority,
-    contentIdPriority,
-    labelPriority,
-    makerPriority,
-    ratingPriority,
-    releaseDatePriority,
-    runtimePriority,
-    seriesPriority,
-    screenshotUrlPriority,
-    titlePriority,
-    trailerUrlPriority,
     displayNameFormat,
-    firstNameOrder,
-    thumbCsv,
-    // thumbCsvPath = path.join(__dirname, "jvThumbs.csv"),
-    thumbCsvAlias,
-    replaceGenre,
-    genreCsvAutoAdd,
-    // genreCsvPath = path.join(__dirname, "jvGenres.csv"),
-    ignoreGenre,
-    requiredField,
-    translate,
-    translateModule,
-    translateFields,
-    translateLanguage,
-    translateDeeplApiKey,
-    keepOriginalDescription,
-    delimiterFormat,
-    actressLanguageJa,
-    thumbCsvAutoAdd,
     unknownActress,
-    idPreference,
     actressAsTag,
-    preferActressAlias,
-    replaceTag,
-    tagCsvAutoAdd,
-    // tagCsvPath = path.join(__dirname, "jvTags.csv"),
     fileName,
   } = options;
 
   if (settings) {
     Object.assign(options, {
-      actressPriority: settings["sort.metadata.priority.actress"],
-      alternateTitlePriority: settings["sort.metadata.priority.alternatetitle"],
-      coverUrlPriority: settings["sort.metadata.priority.coverurl"],
-      descriptionPriority: settings["sort.metadata.priority.description"],
-      directorPriority: settings["sort.metadata.priority.director"],
-      genrePriority: settings["sort.metadata.priority.genre"],
-      idPriority: settings["sort.metadata.priority.id"],
-      contentIdPriority: settings["sort.metadata.priority.contentid"],
-      labelPriority: settings["sort.metadata.priority.label"],
-      makerPriority: settings["sort.metadata.priority.maker"],
-      ratingPriority: settings["sort.metadata.priority.rating"],
-      releaseDatePriority: settings["sort.metadata.priority.releasedate"],
-      runtimePriority: settings["sort.metadata.priority.runtime"],
-      seriesPriority: settings["sort.metadata.priority.series"],
-      screenshotUrlPriority: settings["sort.metadata.priority.screenshoturl"],
-      titlePriority: settings["sort.metadata.priority.title"],
-      trailerUrlPriority: settings["sort.metadata.priority.trailerurl"],
+      ActressPriority: settings["sort.metadata.priority.actress"],
+      AlternateTitlePriority: settings["sort.metadata.priority.alternatetitle"],
+      CoverUrlPriority: settings["sort.metadata.priority.coverurl"],
+      DescriptionPriority: settings["sort.metadata.priority.description"],
+      DirectorPriority: settings["sort.metadata.priority.director"],
+      GenrePriority: settings["sort.metadata.priority.genre"],
+      IdPriority: settings["sort.metadata.priority.id"],
+      ContentIdPriority: settings["sort.metadata.priority.contentid"],
+      LabelPriority: settings["sort.metadata.priority.label"],
+      MakerPriority: settings["sort.metadata.priority.maker"],
+      RatingPriority: settings["sort.metadata.priority.rating"],
+      ReleaseDatePriority: settings["sort.metadata.priority.releasedate"],
+      RuntimePriority: settings["sort.metadata.priority.runtime"],
+      SeriesPriority: settings["sort.metadata.priority.series"],
+      ScreenshotUrlPriority: settings["sort.metadata.priority.screenshoturl"],
+      TitlePriority: settings["sort.metadata.priority.title"],
+      TrailerUrlPriority: settings["sort.metadata.priority.trailerurl"],
       displayNameFormat: settings["sort.metadata.nfo.displayname"],
       thumbCsv: settings["sort.metadata.thumbcsv"],
       thumbCsvAlias: settings["sort.metadata.thumbcsv.convertalias"],
@@ -142,19 +102,8 @@ export function getJVAggregatedData(options: Options) {
       tagCsvAutoAdd: settings["sort.metadata.tagcsv.autoadd"],
       replaceTag: settings["sort.metadata.tagcsv"],
       translateModule: settings["sort.metadata.nfo.translate.module"],
-      // avDanyu: settings["scraper.option.addmaleactors"],
       preferActressAlias: settings["sort.metadata.nfo.preferactressalias"],
     });
-
-    // if (settings["location.genrecsv"]) {
-    //   genreCsvPath = settings["location.genrecsv"];
-    // }
-    // if (settings["location.thumbcsv"]) {
-    //   thumbCsvPath = settings["location.thumbcsv"];
-    // }
-    // if (settings["location.tagcsv"]) {
-    //   tagCsvPath = settings["location.tagcsv"];
-    // }
   }
 
   const aggregatedDataObject = {
@@ -229,34 +178,15 @@ export function getJVAggregatedData(options: Options) {
   ];
 
   for (const field of metadataFields) {
-    const metadataPriority = options[`${field.toLowerCase()}Priority`];
-    console.log(`${field.toLowerCase()}Priority`, metadataPriority);
+    const metadataPriority: string[] = options[`${field}Priority`];
     for (const priority of metadataPriority) {
       const sourceData = data.find((item) => item.Source === priority);
-      console.log(sourceData);
-
-      if (aggregatedDataObject[field] === null) {
+      if (
+        aggregatedDataObject[field] === null ||
+        aggregatedDataObject[field] === undefined
+      ) {
         selectedDataObject[field] = priority;
-        if (field === "AlternateTitle") {
-          aggregatedDataObject[field] = sourceData.Title;
-        } else if (field === "Id") {
-          if (options.idPreference === "contentid") {
-            aggregatedDataObject[field] = sourceData.ContentId;
-          } else {
-            aggregatedDataObject[field] = sourceData.Id;
-          }
-        } else if (field === "Actress") {
-          console.log(sourceData);
-          if (sourceData.Actress === null) {
-            aggregatedDataObject[field] = null;
-          } else {
-            aggregatedDataObject[field] = Array.isArray(sourceData.Actress)
-              ? sourceData.Actress
-              : [sourceData.Actress];
-          }
-        } else {
-          aggregatedDataObject[field] = sourceData[field];
-        }
+        aggregatedDataObject[field] = sourceData[field];
         console.debug(
           `[${
             data[0].Id
@@ -267,129 +197,6 @@ export function getJVAggregatedData(options: Options) {
       }
     }
   }
-
-  // if (options.avDanyu) {
-  //   const maleActors = await getAVDanyuData(aggregatedDataObject.ContentId);
-  //   if (maleActors && maleActors.Actors) {
-  //     aggregatedDataObject.Actress = aggregatedDataObject.Actress.concat(
-  //       maleActors.Actors
-  //     );
-  //   }
-  // }
-
-  // if (thumbCsv) {
-  //   if (fs.existsSync(thumbCsvPath)) {
-  //     let actressCsv;
-  //     try {
-  //       actressCsv = JSON.parse(fs.readFileSync(thumbCsvPath, "utf8"));
-  //     } catch (error) {
-  //       console.error(
-  //         `Error occurred when importing thumbnail csv [${thumbCsvPath}]: ${error}`
-  //       );
-  //     }
-
-  //     if (thumbCsvAutoAdd) {
-  //       try {
-  //         actressCsv = JSON.parse(fs.readFileSync(thumbCsvPath, "utf8"));
-  //       } catch (error) {
-  //         console.error(
-  //           `Error occurred when importing thumbnail csv [${thumbCsvPath}]: ${error}`
-  //         );
-  //       }
-  //     }
-
-  //     const convertedActresses = [];
-  //     if (actressCsv && aggregatedDataObject.Actress) {
-  //       for (const actress of aggregatedDataObject.Actress) {
-  //         const matchActress = actressCsv.find(
-  //           (a) => a.JapaneseName === actress
-  //         );
-  //         if (matchActress) {
-  //           if (thumbCsvAlias && matchActress.Alias !== null) {
-  //             convertedActresses.push(matchActress.Alias);
-  //           } else {
-  //             convertedActresses.push(matchActress.FullName);
-  //           }
-  //         } else {
-  //           convertedActresses.push(actress);
-  //         }
-  //       }
-  //       aggregatedDataObject.Actress = convertedActresses;
-  //     }
-  //   }
-  // }
-
-  // if (replaceGenre) {
-  //   if (fs.existsSync(genreCsvPath)) {
-  //     let genreCsv;
-  //     try {
-  //       genreCsv = JSON.parse(fs.readFileSync(genreCsvPath, "utf8"));
-  //     } catch (error) {
-  //       console.error(
-  //         `Error occurred when importing genre csv [${genreCsvPath}]: ${error}`
-  //       );
-  //     }
-
-  //     if (genreCsvAutoAdd) {
-  //       try {
-  //         genreCsv = JSON.parse(fs.readFileSync(genreCsvPath, "utf8"));
-  //       } catch (error) {
-  //         console.error(
-  //           `Error occurred when importing genre csv [${genreCsvPath}]: ${error}`
-  //         );
-  //       }
-  //     }
-
-  //     const convertedGenres = [];
-  //     if (genreCsv && aggregatedDataObject.Genre) {
-  //       for (const genre of aggregatedDataObject.Genre) {
-  //         const matchGenre = genreCsv.find((g) => g.Genre === genre);
-  //         if (matchGenre) {
-  //           convertedGenres.push(matchGenre.Replace);
-  //         } else {
-  //           convertedGenres.push(genre);
-  //         }
-  //       }
-  //       aggregatedDataObject.Genre = convertedGenres;
-  //     }
-  //   }
-  // }
-
-  // if (replaceTag) {
-  //   if (fs.existsSync(tagCsvPath)) {
-  //     let tagCsv;
-  //     try {
-  //       tagCsv = JSON.parse(fs.readFileSync(tagCsvPath, "utf8"));
-  //     } catch (error) {
-  //       console.error(
-  //         `Error occurred when importing tag csv [${tagCsvPath}]: ${error}`
-  //       );
-  //     }
-
-  //     if (tagCsvAutoAdd) {
-  //       try {
-  //         tagCsv = JSON.parse(fs.readFileSync(tagCsvPath, "utf8"));
-  //       } catch (error) {
-  //         console.error(
-  //           `Error occurred when importing tag csv [${tagCsvPath}]: ${error}`
-  //         );
-  //       }
-  //     }
-
-  //     const convertedTags = [];
-  //     if (tagCsv && aggregatedDataObject.Tag) {
-  //       for (const tag of aggregatedDataObject.Tag) {
-  //         const matchTag = tagCsv.find((t) => t.Tag === tag);
-  //         if (matchTag) {
-  //           convertedTags.push(matchTag.Replace);
-  //         } else {
-  //           convertedTags.push(tag);
-  //         }
-  //       }
-  //       aggregatedDataObject.Tag = convertedTags;
-  //     }
-  //   }
-  // }
 
   if (aggregatedDataObject.Title && aggregatedDataObject.Id) {
     aggregatedDataObject.DisplayName = aggregatedDataObject.Title.replace(
@@ -402,30 +209,6 @@ export function getJVAggregatedData(options: Options) {
       aggregatedDataObject.DisplayName = `${aggregatedDataObject.Id} - ${aggregatedDataObject.DisplayName}`;
     }
   }
-
-  // if (translate && translateFields.length > 0 && translateLanguage) {
-  //   const translateObject = {
-  //     SourceLanguage: "JA",
-  //     TargetLanguage: translateLanguage,
-  //     ApiKey: translateDeeplApiKey,
-  //     Description: aggregatedDataObject.Description,
-  //     TrailerUrl: aggregatedDataObject.TrailerUrl,
-  //     Title: aggregatedDataObject.Title,
-  //   };
-  //   const translatedData = await translateMetadata(
-  //     translateObject,
-  //     translateFields
-  //   );
-  //   Object.assign(aggregatedDataObject, translatedData);
-  // }
-
-  // if (actressLanguageJa) {
-  //   aggregatedDataObject.Actress = aggregatedDataObject.Actress.map(
-  //     (actress) => {
-  //       return convertActressToJapanese(actress);
-  //     }
-  //   );
-  // }
 
   if (
     unknownActress &&
@@ -441,15 +224,6 @@ export function getJVAggregatedData(options: Options) {
       aggregatedDataObject.Actress
     );
   }
-
-  // if (preferActressAlias) {
-  //   aggregatedDataObject.Actress = aggregatedDataObject.Actress.map(
-  //     (actress) => {
-  //       const alias = getActressAlias(actress);
-  //       return alias ? alias : actress;
-  //     }
-  //   );
-  // }
 
   return aggregatedDataObject;
 }
