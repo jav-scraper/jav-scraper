@@ -1,66 +1,9 @@
-import * as fs from "fs";
-import * as path from "path";
-import { MovieData } from "../types/index";
+import { AggregatedDataOptions, AggregatedData } from "../types/index";
 
-type Options = {
-  data: MovieData[];
-  settings: any;
-  ActressPriority?: string[];
-  AlternateTitlePriority?: string[];
-  CoverUrlPriority?: string[];
-  DescriptionPriority?: string[];
-  DirectorPriority?: string[];
-  GenrePriority?: string[];
-  IdPriority?: string[];
-  ContentIdPriority?: string[];
-  LabelPriority?: string[];
-  MakerPriority?: string[];
-  RatingPriority?: string[];
-  ReleaseDatePriority?: string[];
-  RuntimePriority?: string[];
-  SeriesPriority?: string[];
-  ScreenshotUrlPriority?: string[];
-  TitlePriority?: string[];
-  TrailerUrlPriority?: string[];
-  displayNameFormat?: string;
-  firstNameOrder?: string;
-  thumbCsv?: boolean;
-  thumbCsvPath?: string;
-  thumbCsvAlias?: boolean;
-  replaceGenre?: boolean;
-  genreCsvAutoAdd?: boolean;
-  genreCsvPath?: string;
-  ignoreGenre?: boolean;
-  requiredField?: string;
-  translate?: boolean;
-  translateModule?: string;
-  translateFields?: string[];
-  translateLanguage?: string;
-  translateDeeplApiKey?: string;
-  keepOriginalDescription?: boolean;
-  delimiterFormat?: string;
-  actressLanguageJa?: boolean;
-  thumbCsvAutoAdd?: boolean;
-  unknownActress?: boolean;
-  idPreference?: string;
-  actressAsTag?: boolean;
-  preferActressAlias?: boolean;
-  replaceTag?: boolean;
-  tagCsvAutoAdd?: boolean;
-  tagCsvPath?: string;
-  fileName?: string;
-  mediaInfo?: any;
-};
-
-export function getJVAggregatedData(options: Options) {
-  let {
-    data,
-    settings,
-    displayNameFormat,
-    unknownActress,
-    actressAsTag,
-    fileName,
-  } = options;
+export function getJVAggregatedData(
+  options: AggregatedDataOptions
+): AggregatedData {
+  const { data, settings, fileName } = options;
 
   if (settings) {
     Object.assign(options, {
@@ -76,6 +19,7 @@ export function getJVAggregatedData(options: Options) {
       MakerPriority: settings["sort.metadata.priority.maker"],
       RatingPriority: settings["sort.metadata.priority.rating"],
       ReleaseDatePriority: settings["sort.metadata.priority.releasedate"],
+      ReleaseYearPriority: settings["sort.metadata.priority.releaseyear"],
       RuntimePriority: settings["sort.metadata.priority.runtime"],
       SeriesPriority: settings["sort.metadata.priority.series"],
       ScreenshotUrlPriority: settings["sort.metadata.priority.screenshoturl"],
@@ -106,7 +50,7 @@ export function getJVAggregatedData(options: Options) {
     });
   }
 
-  const aggregatedDataObject = {
+  const aggregatedDataObject: AggregatedData = {
     Id: null,
     ContentId: null,
     DisplayName: null,
@@ -115,6 +59,7 @@ export function getJVAggregatedData(options: Options) {
     Description: null,
     Rating: null,
     ReleaseDate: null,
+    ReleaseYear: null,
     Runtime: null,
     Director: null,
     Maker: null,
@@ -129,7 +74,6 @@ export function getJVAggregatedData(options: Options) {
     ScreenshotUrl: null,
     TrailerUrl: null,
     OriginalFileName: fileName,
-    MediaInfo: options.mediaInfo,
   };
 
   const selectedDataObject = {
@@ -141,6 +85,7 @@ export function getJVAggregatedData(options: Options) {
     Description: null,
     Rating: null,
     ReleaseDate: null,
+    ReleaseYear: null,
     Runtime: null,
     Director: null,
     Maker: null,
@@ -154,7 +99,6 @@ export function getJVAggregatedData(options: Options) {
     CoverUrl: null,
     ScreenshotUrl: null,
     TrailerUrl: null,
-    MediaInfo: options.mediaInfo,
   };
 
   const metadataFields = [
@@ -169,6 +113,7 @@ export function getJVAggregatedData(options: Options) {
     "Maker",
     "Rating",
     "ReleaseDate",
+    "ReleaseYear",
     "Runtime",
     "Series",
     "ScreenshotUrl",
@@ -196,33 +141,6 @@ export function getJVAggregatedData(options: Options) {
         );
       }
     }
-  }
-
-  if (aggregatedDataObject.Title && aggregatedDataObject.Id) {
-    aggregatedDataObject.DisplayName = aggregatedDataObject.Title.replace(
-      /[_:/\\*?"<>|]/g,
-      " "
-    );
-    if (displayNameFormat === "title.id") {
-      aggregatedDataObject.DisplayName = `${aggregatedDataObject.DisplayName} (${aggregatedDataObject.Id})`;
-    } else if (displayNameFormat === "id.title") {
-      aggregatedDataObject.DisplayName = `${aggregatedDataObject.Id} - ${aggregatedDataObject.DisplayName}`;
-    }
-  }
-
-  if (
-    unknownActress &&
-    aggregatedDataObject.Actress.includes("Unknown Actress")
-  ) {
-    aggregatedDataObject.Actress = aggregatedDataObject.Actress.filter(
-      (actress) => actress !== "Unknown Actress"
-    );
-  }
-
-  if (actressAsTag && aggregatedDataObject.Actress) {
-    aggregatedDataObject.Tag = aggregatedDataObject.Tag.concat(
-      aggregatedDataObject.Actress
-    );
   }
 
   return aggregatedDataObject;

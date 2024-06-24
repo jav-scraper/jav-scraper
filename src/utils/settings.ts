@@ -124,6 +124,7 @@ export const settings = {
   "sort.metadata.priority.label": ["javdb", "jav321"],
   "sort.metadata.priority.maker": ["javdb", "jav321"],
   "sort.metadata.priority.releasedate": ["javdb", "jav321"],
+  "sort.metadata.priority.releaseyear": ["javdb", "jav321"],
   "sort.metadata.priority.rating": ["javdb", "jav321"],
   "sort.metadata.priority.runtime": ["javdb", "jav321"],
   "sort.metadata.priority.series": ["javdb", "jav321"],

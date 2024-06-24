@@ -3,6 +3,7 @@ import { getJVItem } from "./src/utils/getItem";
 import { getJav321 } from "./src/fetcher/getJav321";
 import { getJavdb } from "./src/fetcher/getJavdb";
 import { getJVAggregatedData } from "./src/utils/getJVAggregatedData";
+import { getJVNfo } from "./src/utils/getJVNfo";
 import { settings } from "./src/utils/settings";
 
 (async () => {
@@ -19,6 +20,7 @@ import { settings } from "./src/utils/settings";
   results.forEach(async (result) => {
     const data = await Promise.all([getJav321(result.Id), getJavdb(result.Id)]);
     const aggregatedData = getJVAggregatedData({ data, settings });
-    console.log(aggregatedData);
+    const nfoString = getJVNfo(aggregatedData);
+    console.log(nfoString);
   });
 })();
