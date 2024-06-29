@@ -18,11 +18,8 @@ import { Source, MovieData } from "../types/index";
 import { get } from "http";
 
 export async function getJav321Data(url: string | null): Promise<MovieData> {
-  if (!url) {
-    return null;
-  }
   const source: Source = "jav321";
-  let movieDataObject: MovieData = {
+  const movieDataObject: MovieData = {
     Source: source,
     Url: url,
     Id: null,
@@ -35,23 +32,29 @@ export async function getJav321Data(url: string | null): Promise<MovieData> {
     Runtime: null,
     Series: null,
     Maker: null,
+    Label: null,
     Rating: null,
-    Directors: null,
+    Director: null,
     Actress: null,
     Genre: null,
     CoverUrl: null,
     ScreenshotUrl: null,
     TrailerUrl: null,
   };
-
+  if (!url) {
+    return movieDataObject;
+  }
   try {
     writeJVLog("Debug", `[${source}] Performing on URL [${url}]`);
     const response = await fetch(url);
     const webContent = await response.text();
 
-    movieDataObject = {
-      Source: source,
-      Url: url,
+    writeJVLog(
+      "Debug",
+      `[${source}] Success: ${JSON.stringify(movieDataObject, null, 2)}`
+    );
+    return {
+      ...movieDataObject,
       Id: getJav321Id(webContent),
       ContentId: getJav321Id(webContent),
       Title: getJav321Title(webContent),
@@ -63,19 +66,13 @@ export async function getJav321Data(url: string | null): Promise<MovieData> {
       Series: getJav321Series(webContent),
       Maker: getJav321Maker(webContent),
       Rating: null,
-      Directors: null,
+      Director: null,
       Actress: getJav321Actress(webContent),
       Genre: getJav321Genre(webContent),
       CoverUrl: getJav321CoverUrl(webContent),
       ScreenshotUrl: getJav321ScreenshotUrl(webContent),
       TrailerUrl: null,
     };
-
-    writeJVLog(
-      "Debug",
-      `[${source}] Success: ${JSON.stringify(movieDataObject, null, 2)}`
-    );
-    return movieDataObject;
   } catch (error: unknown) {
     if (error instanceof Error) {
       writeJVLog("Error", `[${source}] Error: [${url}]: ${error.message}`);

@@ -19,8 +19,13 @@ import { settings } from "./src/utils/settings";
   const results = await getJVItem(examplePath, getItemOptions);
   results.forEach(async (result) => {
     const data = await Promise.all([getJav321(result.Id), getJavdb(result.Id)]);
-    const aggregatedData = getJVAggregatedData({ data, settings });
-    const nfoString = getJVNfo(aggregatedData);
-    console.log(nfoString);
+    const aggregatedData = getJVAggregatedData({
+      data,
+      settings,
+      fileName: null,
+    });
+    console.log(aggregatedData);
+    // const nfoString = getJVNfo(aggregatedData);
+    // console.log(nfoString);
   });
 })();

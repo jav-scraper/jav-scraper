@@ -1,4 +1,6 @@
-export const settings = {
+import { Settings } from "../types/index";
+
+export const settings: Settings = {
   throttlelimit: 3,
   "location.input": "",
   "location.output": "",

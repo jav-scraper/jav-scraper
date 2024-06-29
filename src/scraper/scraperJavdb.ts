@@ -1,7 +1,10 @@
 import { JSDOM } from "jsdom";
 import { Actress, Rating } from "../types";
 
-function extractTextContent3(webContent: string, selector: string) {
+function extractTextContent3(
+  webContent: string,
+  selector: string
+): string[] | null {
   const doc = new JSDOM(webContent).window.document;
   const key = doc.evaluate(
     `//strong[contains(., '${selector}')]`,
@@ -16,7 +19,7 @@ function extractTextContent3(webContent: string, selector: string) {
         return element.nodeName === "A";
       })
       .map((element) => {
-        return element.textContent?.trim();
+        return element.textContent?.trim() || "";
       });
   } else {
     return null;
@@ -39,13 +42,16 @@ function extractTextContent2(webContent: string, selector: string) {
   }
 }
 
-function extractTextContent(webContent: string, selector: string) {
+function extractTextContent(
+  webContent: string,
+  selector: string
+): string | null {
   const doc = new JSDOM(webContent).window.document;
   const element = doc.querySelector(selector);
   if (!element) {
     return null;
   } else {
-    return element.textContent?.trim();
+    return element.textContent?.trim() || null;
   }
 }
 
@@ -53,7 +59,7 @@ function validation(
   value: string | null | undefined,
   regex: RegExp,
   groupIndex: number = 1
-) {
+): string | null {
   if (!value) {
     return null;
   }
@@ -116,39 +122,46 @@ export function getJavdbRating(webContent: string): Rating | null {
   }
 }
 
-export function getJavdbGenre(webContent: string): string[] | null {
+export function getJavdbGenre(webContent: string): string[] {
   const genres = extractTextContent3(webContent, "Tags:");
-  return genres?.length ? genres : null;
+  return genres?.length ? genres : [];
 }
 
 export function getJavdbActress(webContent: string): Actress[] | null {
   const actresses = extractTextContent3(webContent, "Actor(s):");
-  return actresses?.map((actress) => ({
-    LastName: null,
-    FirstName: null,
-    JapaneseName: actress,
-    ThumbUrl: null,
-  }));
+  return actresses
+    ? actresses.map((actress) => ({
+        LastName: null,
+        FirstName: null,
+        JapaneseName: actress,
+        ThumbUrl: null,
+      }))
+    : null;
 }
 
 export function getJavdbCoverUrl(webContent: string): string | null {
   const doc = new JSDOM(webContent).window.document;
   const element = doc.querySelector("img.video-cover");
-  return element?.getAttribute("src");
+  return element?.getAttribute("src") || null;
 }
 
 export function getJavdbScreenshotUrl(webContent: string): string[] | null {
   const doc = new JSDOM(webContent).window.document;
-  return Array.from(
+  const elements = Array.from(
     doc.querySelectorAll('a.tile-item[data-fancybox="gallery"]')
-  ).map((element) => element.getAttribute("href"));
+  );
+  return elements.map((element) => element.getAttribute("href") || "");
 }
 
 export function getJavdbTrailerUrl(webContent: string): string | null {
   const doc = new JSDOM(webContent).window.document;
   const element = doc.querySelector("video source");
-  const trailerUrl = element?.getAttribute("src");
-  return trailerUrl && !trailerUrl.startsWith("https")
-    ? `https:${trailerUrl}`
-    : trailerUrl;
+  if (element) {
+    const trailerUrl = element.getAttribute("src");
+    return trailerUrl && !trailerUrl.startsWith("https")
+      ? `https:${trailerUrl}`
+      : trailerUrl;
+  } else {
+    return null;
+  }
 }

@@ -87,7 +87,7 @@ export function getJav321Actress(webContent: string): Actress[] {
 export function getJav321CoverUrl(webContent: string): string | null {
   const regex =
     /"\/snapshot\/.*?\/\d\/0"><img class="img-responsive" max-width="100%" src="(.*?)"/;
-  return extractValue(regex, webContent)?.split('" onerror')[0].trim();
+  return extractValue(regex, webContent)?.split('" onerror')[0].trim() || null;
 }
 
 export function getJav321ScreenshotUrl(webContent: string): string[] | null {
