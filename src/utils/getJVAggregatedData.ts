@@ -5,11 +5,10 @@ import {
   MetadataPriorityKey,
 } from "../types/index";
 
-export function getJVAggregatedData(
-  options: AggregatedDataOptions
-): AggregatedData {
-  const { data, settings, fileName } = options;
-
+export function getJVAggregatedData({
+  data,
+  settings,
+}: AggregatedDataOptions): AggregatedData {
   const metadataPriorities = {
     Actress: settings["sort.metadata.priority.actress"],
     AlternateTitle: settings["sort.metadata.priority.alternatetitle"],
@@ -47,6 +46,7 @@ export function getJVAggregatedData(
     Series: null,
     Maker: null,
     Label: null,
+    Tag: null,
     Rating: null,
     Director: null,
     Actress: null,

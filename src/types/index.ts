@@ -54,6 +54,7 @@ export type AggregatedData = {
   Series: string | null;
   Maker: string | null;
   Label: string | null;
+  Tag: string[] | null;
   Rating: Rating | null;
   Director: string | null;
   Actress: Actress[] | null;
@@ -61,7 +62,6 @@ export type AggregatedData = {
   CoverUrl: string | null;
   ScreenshotUrl: string[] | null;
   TrailerUrl: string | null;
-  // Tag: string[] | null;
   // Tagline: string | null;
 };
 
@@ -249,5 +249,4 @@ export type Rating = {
 export type AggregatedDataOptions = {
   data: MovieData[];
   settings: Settings;
-  fileName: string | null;
 };

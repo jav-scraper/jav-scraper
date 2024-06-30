@@ -34,6 +34,7 @@ export async function getJavdbData(url: string | null): Promise<MovieData> {
     Series: null,
     Maker: null,
     Label: null,
+    Tag: null,
     Rating: null,
     Director: null,
     Actress: null,

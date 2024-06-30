@@ -1,6 +1,6 @@
 import { AggregatedData } from "../types/index";
 
-function convertNfoChar(str: string) {
+function convertNfoChar(str: string | null) {
   if (str === null || str === undefined) return "";
   return str
     .replace(/&/g, "&amp;")
@@ -11,7 +11,6 @@ function convertNfoChar(str: string) {
 
 export function getJVNfo({
   Id,
-  DisplayName,
   Title,
   AlternateTitle,
   Description,
@@ -21,16 +20,14 @@ export function getJVNfo({
   Runtime,
   Director,
   Maker,
-  Label,
   Series,
   Actress,
   Genre,
   CoverUrl,
-  ScreenshotUrl,
-  TrailerUrl,
   Tag,
-  Tagline,
-  Credits,
+  // Tagline,
+  // Credits,
+  TrailerUrl,
 }: AggregatedData) {
   let nfoString = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <movie>
@@ -41,13 +38,12 @@ export function getJVNfo({
     <year>${ReleaseYear}</year>
     <director>${convertNfoChar(Director)}</director>
     <studio>${convertNfoChar(Maker)}</studio>
-    <rating>${Rating.Rating}</rating>
-    <votes>${Rating.Votes}</votes>
+    <rating>${Rating?.Rating || ""}</rating>
+    <votes>${Rating?.Votes || ""}</votes>
     <plot>${convertNfoChar(Description)}</plot>
     <runtime>${convertNfoChar(Runtime)}</runtime>
     <trailer>${convertNfoChar(TrailerUrl)}</trailer>
     <mpaa>XXX</mpaa>
-    <tagline>${convertNfoChar(Tagline)}</tagline>
     <set>${convertNfoChar(Series)}</set>
     <thumb>${CoverUrl}</thumb>\n`;
 
@@ -56,10 +52,10 @@ export function getJVNfo({
     nfoString += `    <tag>${item}</tag>\n`;
   });
 
-  (Credits || []).forEach((item: any) => {
-    item = convertNfoChar(item);
-    nfoString += `    <credits>${item}</credits>\n`;
-  });
+  // (Credits || []).forEach((item: any) => {
+  //   item = convertNfoChar(item);
+  //   nfoString += `    <credits>${item}</credits>\n`;
+  // });
 
   (Genre || []).forEach((item) => {
     item = convertNfoChar(item);
