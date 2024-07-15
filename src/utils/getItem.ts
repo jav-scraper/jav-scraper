@@ -1,12 +1,17 @@
 import * as fs from "fs";
 import * as path from "path";
 import { convertJVTitle } from "./convertTitle.js";
-import { Options, File, Title } from "../types/index";
+import { Options, File, Title, Settings } from "../types/index";
 
-export async function getJVItem(
-  dirPath: string,
-  options: Options
-): Promise<Title[]> {
+type Props = Readonly<{
+  options: Options;
+  settings: Settings;
+}>;
+
+export async function getJVItem({
+  options,
+  settings,
+}: Props): Promise<Title[]> {
   const {
     recurse = false,
     depth = Infinity,
@@ -53,26 +58,7 @@ export async function getJVItem(
     }
     return files;
   }
-
-  const files = await getFiles(dirPath, 0);
+  const locationInput = settings["location.input"];
+  const files = await getFiles(locationInput, 0);
   return convertJVTitle(files, strict);
 }
-
-// Example usage
-/*
-(async () => {
-  const examplePath = "./path/to/directory";
-  const options = {
-    recurse: true,
-    depth: 2,
-    minimumFileSize: 1, // 1 MB
-    excludedStrings: ["example", "test"],
-    includedExtensions: [".mp4", ".mkv"],
-    regexEnabled: true,
-    regexString: "example-regex",
-  };
-
-  const result = await getJVItem(examplePath, options);
-  console.log(result);
-})();
-*/

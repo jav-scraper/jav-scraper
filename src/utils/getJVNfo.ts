@@ -23,6 +23,7 @@ export function getJVNfo({
   Series,
   Actress,
   Genre,
+  PosterUrl,
   CoverUrl,
   Tag,
   // Tagline,
@@ -45,6 +46,7 @@ export function getJVNfo({
     <trailer>${convertNfoChar(TrailerUrl)}</trailer>
     <mpaa>XXX</mpaa>
     <set>${convertNfoChar(Series)}</set>
+    <poster>${PosterUrl}</poster>;
     <thumb>${CoverUrl}</thumb>\n`;
 
   (Tag || []).forEach((item: any) => {

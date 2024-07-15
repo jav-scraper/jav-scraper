@@ -2,8 +2,8 @@ import { Settings } from "../types/index";
 
 export const settings: Settings = {
   throttlelimit: 3,
-  "location.input": "",
-  "location.output": "",
+  "location.input": "/mnt/f/JAV/Test",
+  "location.output": "/mnt/f/JAV/Sorted",
   "location.thumbcsv": "",
   "location.genrecsv": "",
   "location.uncensorcsv": "",
@@ -125,6 +125,7 @@ export const settings: Settings = {
   "sort.metadata.priority.contentid": ["javdb", "jav321"],
   "sort.metadata.priority.label": ["javdb", "jav321"],
   "sort.metadata.priority.maker": ["javdb", "jav321"],
+  "sort.metadata.priority.posterurl": ["javdb", "jav321"],
   "sort.metadata.priority.releasedate": ["javdb", "jav321"],
   "sort.metadata.priority.releaseyear": ["javdb", "jav321"],
   "sort.metadata.priority.rating": ["javdb", "jav321"],

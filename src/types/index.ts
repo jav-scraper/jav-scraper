@@ -60,6 +60,7 @@ export type AggregatedData = {
   Actress: Actress[] | null;
   Genre: string[] | null;
   CoverUrl: string | null;
+  PosterUrl: string | null;
   ScreenshotUrl: string[] | null;
   TrailerUrl: string | null;
   // Tagline: string | null;
@@ -188,6 +189,7 @@ export type Settings = {
   "sort.metadata.priority.contentid": string[];
   "sort.metadata.priority.label": string[];
   "sort.metadata.priority.maker": string[];
+  "sort.metadata.priority.posterurl": string[];
   "sort.metadata.priority.releasedate": string[];
   "sort.metadata.priority.releaseyear": string[];
   "sort.metadata.priority.rating": string[];

@@ -10,6 +10,7 @@ import {
   getJav321Maker,
   getJav321Actress,
   getJav321Genre,
+  getJav321PosterUrl,
   getJav321CoverUrl,
   getJav321ScreenshotUrl,
 } from "../scraper/scraperJav321.js";
@@ -38,6 +39,7 @@ export async function getJav321Data(url: string | null): Promise<MovieData> {
     Director: null,
     Actress: null,
     Genre: null,
+    PosterUrl: null,
     CoverUrl: null,
     ScreenshotUrl: null,
     TrailerUrl: null,
@@ -70,6 +72,7 @@ export async function getJav321Data(url: string | null): Promise<MovieData> {
       Director: null,
       Actress: getJav321Actress(webContent),
       Genre: getJav321Genre(webContent),
+      PosterUrl: getJav321PosterUrl(webContent),
       CoverUrl: getJav321CoverUrl(webContent),
       ScreenshotUrl: getJav321ScreenshotUrl(webContent),
       TrailerUrl: null,

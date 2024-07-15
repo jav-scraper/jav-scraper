@@ -1,14 +1,13 @@
-// import { scraper } from "./src/scraper/jav321.mjs";
 import { getJVItem } from "./src/utils/getItem";
 import { getJav321 } from "./src/fetcher/getJav321";
 import { getJavdb } from "./src/fetcher/getJavdb";
 import { getJVAggregatedData } from "./src/utils/getJVAggregatedData";
 import { getJVNfo } from "./src/utils/getJVNfo";
 import { settings } from "./src/utils/settings";
+import { writeJVItem } from "./src/utils/writeItem";
 
 (async () => {
-  const examplePath = "/mnt/f/JAV/Test";
-  const getItemOptions = {
+  const options = {
     recurse: true,
     depth: 2,
     strict: true,
@@ -16,11 +15,18 @@ import { settings } from "./src/utils/settings";
     excludedStrings: ["example", "test"],
     includedExtensions: [".mp4", ".mkv"],
   };
-  const results = await getJVItem(examplePath, getItemOptions);
-  results.forEach(async (result) => {
-    const data = await Promise.all([getJav321(result.Id), getJavdb(result.Id)]);
+  const sources = await getJVItem({ options, settings });
+  sources.forEach(async (source) => {
+    const data = await Promise.all([getJav321(source.Id), getJavdb(source.Id)]);
     const aggregatedData = getJVAggregatedData({ data, settings });
     const nfoString = getJVNfo(aggregatedData);
-    console.log(nfoString);
+    await writeJVItem({
+      id: aggregatedData.Id,
+      thumb: aggregatedData.CoverUrl,
+      poster: aggregatedData.PosterUrl,
+      nfoString,
+      source,
+      settings,
+    });
   });
 })();
