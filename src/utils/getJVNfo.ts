@@ -12,7 +12,6 @@ function convertNfoChar(str: string | null) {
 export function getJVNfo({
   Id,
   Title,
-  AlternateTitle,
   Description,
   Rating,
   ReleaseDate,
@@ -32,8 +31,8 @@ export function getJVNfo({
 }: AggregatedData) {
   let nfoString = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <movie>
-    <title>${convertNfoChar(Title)}</title>
-    <originaltitle>${convertNfoChar(AlternateTitle)}</originaltitle>
+    <title>${Id}-${convertNfoChar(Title)}</title>
+    <originaltitle>${convertNfoChar(Title)}</originaltitle>
     <id>${Id}</id>
     <premiered>${ReleaseDate}</premiered>
     <year>${ReleaseYear}</year>

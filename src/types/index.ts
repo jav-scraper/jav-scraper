@@ -46,7 +46,6 @@ export type AggregatedData = {
   Id: string | null;
   ContentId: string | null;
   Title: string | null;
-  AlternateTitle: string | null;
   Description: string | null;
   ReleaseDate: string | null;
   ReleaseYear: string | null;
@@ -70,7 +69,6 @@ export type MetadataPriorityKey =
   | "Id"
   | "ContentId"
   | "Title"
-  | "AlternateTitle"
   | "Description"
   | "ReleaseDate"
   | "ReleaseYear"
@@ -180,7 +178,6 @@ export type Settings = {
   "sort.metadata.genre.ignore": string[];
   "sort.metadata.requiredfield": string[];
   "sort.metadata.priority.actress": string[];
-  "sort.metadata.priority.alternatetitle": string[];
   "sort.metadata.priority.coverurl": string[];
   "sort.metadata.priority.description": string[];
   "sort.metadata.priority.director": string[];

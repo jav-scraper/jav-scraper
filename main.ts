@@ -24,6 +24,7 @@ import { writeJVItem } from "./src/utils/writeItem";
       id: aggregatedData.Id,
       thumb: aggregatedData.CoverUrl,
       poster: aggregatedData.PosterUrl,
+      screenshotUrl: aggregatedData.ScreenshotUrl,
       nfoString,
       source,
       settings,

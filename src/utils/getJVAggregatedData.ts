@@ -11,7 +11,6 @@ export function getJVAggregatedData({
 }: AggregatedDataOptions): AggregatedData {
   const metadataPriorities = {
     Actress: settings["sort.metadata.priority.actress"],
-    AlternateTitle: settings["sort.metadata.priority.alternatetitle"],
     CoverUrl: settings["sort.metadata.priority.coverurl"],
     Description: settings["sort.metadata.priority.description"],
     Director: settings["sort.metadata.priority.director"],
@@ -39,7 +38,6 @@ export function getJVAggregatedData({
     Id: null,
     ContentId: null,
     Title: null,
-    AlternateTitle: null,
     Description: null,
     ReleaseDate: null,
     ReleaseYear: null,

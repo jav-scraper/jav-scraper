@@ -6,6 +6,7 @@ type Props = Readonly<{
   id: string | null;
   thumb: string | null;
   poster: string | null;
+  screenshotUrl: string[] | null;
   nfoString: string;
   source: Title;
   settings: Settings;
@@ -15,6 +16,7 @@ export const writeJVItem = async ({
   id,
   thumb,
   poster,
+  screenshotUrl,
   nfoString,
   source,
   settings,
@@ -37,5 +39,14 @@ export const writeJVItem = async ({
     const posterPath = `${outputPath}/poster.jpg`;
     const result = await fetch(poster);
     fs.writeFileSync(posterPath, await result.buffer(), "binary");
+  }
+  if (screenshotUrl) {
+    const extrafanartPath = `${outputPath}/extrafanart`;
+    fs.mkdirSync(extrafanartPath, { recursive: true });
+    screenshotUrl.forEach(async (url, index) => {
+      const screenshotPath = `${extrafanartPath}/fanart${index + 1}.jpg`;
+      const result = await fetch(url);
+      fs.writeFileSync(screenshotPath, await result.buffer(), "binary");
+    });
   }
 };

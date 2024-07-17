@@ -116,7 +116,6 @@ export const settings: Settings = {
     "title",
   ],
   "sort.metadata.priority.actress": ["javdb", "jav321"],
-  "sort.metadata.priority.alternatetitle": ["javdb", "jav321"],
   "sort.metadata.priority.coverurl": ["javdb", "jav321"],
   "sort.metadata.priority.description": ["javdb", "jav321"],
   "sort.metadata.priority.director": ["javdb", "jav321"],
