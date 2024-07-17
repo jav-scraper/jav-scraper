@@ -1,5 +1,5 @@
 import { JSDOM } from "jsdom";
-import { Actress, Rating } from "../types";
+import { Actress, Rating } from "../../types";
 
 function extractTextContent3(
   webContent: string,

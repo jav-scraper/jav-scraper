@@ -1,4 +1,4 @@
-import { Actress } from "../types";
+import { Actress } from "../../types";
 
 function extractValue(regex: RegExp, text: string): string | null {
   const match = text.match(regex);

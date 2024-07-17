@@ -15,9 +15,9 @@ import {
   getJavdbRating,
   getJavdbScreenshotUrl,
   getJavdbTrailerUrl,
-} from "../scraper/scraperJavdb.js";
-import { writeJVLog } from "../utils/writeJVLog.js";
-import { Source, MovieData } from "../types/index";
+} from "./getJavdbScraper";
+import { writeJVLog } from "../../utils";
+import { Source, MovieData } from "../../types";
 
 export async function getJavdbData(url: string | null): Promise<MovieData> {
   const source: Source = "javdb";

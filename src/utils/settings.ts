@@ -1,4 +1,4 @@
-import { Settings } from "../types/index";
+import { Settings } from "../types";
 
 export const settings: Settings = {
   throttlelimit: 3,

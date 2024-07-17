@@ -1,4 +1,4 @@
-import { AggregatedData } from "../types/index";
+import { AggregatedData } from "../types";
 
 function convertNfoChar(str: string | null) {
   if (str === null || str === undefined) return "";

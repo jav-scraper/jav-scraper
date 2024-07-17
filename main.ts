@@ -1,10 +1,11 @@
-import { getJVItem } from "./src/utils/getItem";
-import { getJav321 } from "./src/fetcher/getJav321";
-import { getJavdb } from "./src/fetcher/getJavdb";
-import { getJVAggregatedData } from "./src/utils/getJVAggregatedData";
-import { getJVNfo } from "./src/utils/getJVNfo";
-import { settings } from "./src/utils/settings";
-import { writeJVItem } from "./src/utils/writeItem";
+import { getJav321, getJavdb } from "./src/fetcher";
+import {
+  getJVAggregatedData,
+  getJVItem,
+  getJVNfo,
+  settings,
+  writeJVItem,
+} from "./src/utils";
 
 (async () => {
   const options = {

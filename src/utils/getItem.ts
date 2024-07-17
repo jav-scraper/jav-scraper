@@ -1,7 +1,7 @@
 import * as fs from "fs";
 import * as path from "path";
-import { convertJVTitle } from "./convertTitle.js";
-import { Options, File, Title, Settings } from "../types/index";
+import { convertJVTitle } from "./convertTitle";
+import { Options, File, Title, Settings } from "../types";
 
 type Props = Readonly<{
   options: Options;

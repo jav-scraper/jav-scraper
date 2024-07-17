@@ -13,10 +13,9 @@ import {
   getJav321PosterUrl,
   getJav321CoverUrl,
   getJav321ScreenshotUrl,
-} from "../scraper/scraperJav321.js";
-import { writeJVLog } from "../utils/writeJVLog.js";
-import { Source, MovieData } from "../types/index";
-import { get } from "http";
+} from "./getJav321Scraper";
+import { writeJVLog } from "../../utils";
+import { Source, MovieData } from "../../types";
 
 export async function getJav321Data(url: string | null): Promise<MovieData> {
   const source: Source = "jav321";

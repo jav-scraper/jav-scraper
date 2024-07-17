@@ -1,5 +1,5 @@
 import fs from "fs";
-import { Settings, Title } from "../types/index";
+import { Settings, Title } from "../types";
 import fetch from "node-fetch";
 
 type Props = Readonly<{

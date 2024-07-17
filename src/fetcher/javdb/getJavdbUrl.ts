@@ -1,7 +1,7 @@
 import fetch from "node-fetch";
 import { JSDOM } from "jsdom";
-import { Url } from "../types/index";
-import { writeJVLog } from "../utils/writeJVLog.js";
+import { Url } from "../../types";
+import { writeJVLog } from "../../utils";
 
 export async function getJavdbUrl(
   id: string,

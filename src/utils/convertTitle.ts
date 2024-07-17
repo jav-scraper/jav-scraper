@@ -1,4 +1,4 @@
-import { Title, File } from "../types/index";
+import { Title, File } from "../types";
 
 export const convertJVTitle = (files: File[], strict: boolean = false) => {
   let dataObject: Title[] = [];

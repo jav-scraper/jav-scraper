@@ -1,7 +1,7 @@
 import fetch from "node-fetch";
-import { getJav321Id, getJav321Title } from "../scraper/scraperJav321.js";
-import { writeJVLog } from "../utils/writeJVLog.js";
-import { Url } from "../types/index";
+import { getJav321Id, getJav321Title } from "./getJav321Scraper";
+import { writeJVLog } from "../../utils";
+import { Url } from "../../types";
 
 export async function getJav321Url(
   id: string,

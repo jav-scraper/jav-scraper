@@ -3,7 +3,7 @@ import {
   AggregatedDataOptions,
   AggregatedData,
   MetadataPriorityKey,
-} from "../types/index";
+} from "../types";
 
 export function getJVAggregatedData({
   data,
