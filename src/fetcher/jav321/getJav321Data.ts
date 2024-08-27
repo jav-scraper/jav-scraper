@@ -50,10 +50,6 @@ export async function getJav321Data(url: string | null): Promise<MovieData> {
     const response = await fetch(url);
     const webContent = await response.text();
 
-    writeJVLog(
-      "Debug",
-      `[${source}] Success: ${JSON.stringify(movieDataObject, null, 2)}`
-    );
     return {
       ...movieDataObject,
       Id: getJav321Id(webContent),
