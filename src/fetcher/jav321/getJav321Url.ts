@@ -1,19 +1,17 @@
 import fetch from "node-fetch";
 import { getJav321Id, getJav321Title } from "./getJav321Scraper";
-import { writeJVLog } from "../../utils";
-import { Url } from "../../types";
+import { logger } from "../../utils";
+import { Source, Url } from "../../types";
 
 export async function getJav321Url(
   id: string,
   allResults: boolean = false
 ): Promise<Url | undefined> {
   const searchUrl = "https://jp.jav321.com/search";
+  const source: Source = "jav321";
 
   try {
-    writeJVLog(
-      "Debug",
-      `[getJav321Url] Performing [POST] on URL [${searchUrl}]`
-    );
+    logger.info({ source, url: searchUrl, msg: "start fetch" });
     const response = await fetch(searchUrl, {
       method: "POST",
       headers: {
@@ -23,6 +21,7 @@ export async function getJav321Url(
     });
     const searchResultUrl = response.url;
     const webContent = await response.text();
+    logger.info({ source, url: searchUrl, msg: "success fetch" });
 
     if (searchResultUrl.includes("/video/")) {
       try {
@@ -31,18 +30,13 @@ export async function getJav321Url(
           Title: getJav321Title(webContent),
           Url: searchResultUrl,
         };
+        logger.info({ source, url: searchUrl, msg: "success found" });
         return resultObject;
       } catch (error) {
-        writeJVLog(
-          "Error",
-          `[getJav321Url] Performing [POST] on URL [${error}]`
-        );
+        logger.error({ source, url: searchUrl, error });
       }
     }
   } catch (error) {
-    writeJVLog(
-      "Error",
-      `[getJav321Url] Error occurred on [POST] on URL [${error}]`
-    );
+    logger.error({ source, url: searchUrl, error });
   }
 }

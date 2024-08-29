@@ -1,6 +1,7 @@
 import fs from "fs";
 import { Settings, Title } from "../types";
 import fetch from "node-fetch";
+import { logger } from "./logger";
 
 type Props = Readonly<{
   id: string | null;
@@ -21,6 +22,7 @@ export const writeJVItem = async ({
   source,
   settings,
 }: Props): Promise<void> => {
+  logger.info({ id, msg: "start writing" });
   const locationOutput = settings["location.output"];
   const outputPath = `${locationOutput}/${id}`;
   const outputFullName = `${outputPath}/${source.FileName}`;
@@ -49,4 +51,5 @@ export const writeJVItem = async ({
       fs.writeFileSync(screenshotPath, await result.buffer(), "binary");
     });
   }
+  logger.info({ id, msg: "success writing" });
 };

@@ -1,26 +1,25 @@
 import fetch from "node-fetch";
 import { JSDOM } from "jsdom";
-import { Url } from "../../types";
-import { writeJVLog } from "../../utils";
+import { Source, Url } from "../../types";
+import { logger } from "../../utils";
 
 export async function getJavdbUrl(
   id: string,
   allResults: boolean = false
 ): Promise<Url | undefined> {
+  const source: Source = "javdb";
   const searchUrl = `https://javdb.com/search?q=${id}&f=all`;
   let headers = {};
   let webContent;
 
   try {
-    writeJVLog("Debug", `[getJavdbUrl] Performing [GET] on URL [${searchUrl}]`);
+    logger.info({ source, url: searchUrl, msg: "start fetch" });
     const response = await fetch(searchUrl, { headers });
     webContent = await response.text();
+    logger.info({ source, url: searchUrl, msg: "success fetch" });
   } catch (error) {
     if (error instanceof Error) {
-      writeJVLog(
-        "Error",
-        `[getJavdbUrl] Error [GET] on URL [${searchUrl}]: ${error.message}`
-      );
+      logger.error({ source, url: searchUrl, error });
     }
     try {
       await new Promise((resolve) => setTimeout(resolve, 3000));
@@ -28,10 +27,7 @@ export async function getJavdbUrl(
       webContent = await response.text();
     } catch (retryError) {
       if (retryError instanceof Error) {
-        writeJVLog(
-          "Error",
-          `[getJavdbUrl] Retry error [GET] on URL [${searchUrl}]: ${retryError.message}`
-        );
+        logger.error({ source, url: searchUrl, error });
       }
     }
   }
@@ -63,9 +59,10 @@ export async function getJavdbUrl(
       Id: entry.id,
       Title: entry.title,
     }));
+    logger.info({ source, url: searchUrl, msg: "success found" });
     return urlObject[0];
   } else {
-    writeJVLog("Warning", `[getJavdbUrl] Search [${id}] not matched on Javdb`);
+    logger.error({ source, url: searchUrl, error: new Error("not found") });
     return;
   }
 }

@@ -14,9 +14,8 @@ import {
   getJav321CoverUrl,
   getJav321ScreenshotUrl,
 } from "./getJav321Scraper";
-import { writeJVLog } from "../../utils";
+import { logger } from "../../utils";
 import { Source, MovieData } from "../../types";
-
 export async function getJav321Data(url: string | null): Promise<MovieData> {
   const source: Source = "jav321";
   const movieDataObject: MovieData = {
@@ -46,10 +45,10 @@ export async function getJav321Data(url: string | null): Promise<MovieData> {
     return movieDataObject;
   }
   try {
-    writeJVLog("Debug", `[${source}] Performing on URL [${url}]`);
+    logger.info({ source, url, msg: "start scraping" });
     const response = await fetch(url);
     const webContent = await response.text();
-
+    logger.info({ source, url, msg: "success scraping" });
     return {
       ...movieDataObject,
       Id: getJav321Id(webContent),
@@ -72,7 +71,7 @@ export async function getJav321Data(url: string | null): Promise<MovieData> {
     };
   } catch (error: unknown) {
     if (error instanceof Error) {
-      writeJVLog("Error", `[${source}] Error: [${url}]: ${error.message}`);
+      logger.error({ source, url, error });
     }
   }
 

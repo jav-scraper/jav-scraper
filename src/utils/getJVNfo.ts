@@ -1,4 +1,5 @@
 import { AggregatedData } from "../types";
+import { logger } from "./logger";
 
 function convertNfoChar(str: string | null) {
   if (str === null || str === undefined) return "";
@@ -29,6 +30,7 @@ export function getJVNfo({
   // Credits,
   TrailerUrl,
 }: AggregatedData) {
+  logger.info({ msg: "start generate nfo" });
   let nfoString = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <movie>
     <title>${Id}-${convertNfoChar(Title)}</title>
@@ -75,5 +77,6 @@ export function getJVNfo({
   });
 
   nfoString += `</movie>`;
+  logger.info({ msg: "success generate nfo" });
   return nfoString;
 }

@@ -4,4 +4,4 @@ export { getJVAggregatedData } from "./getJVAggregatedData";
 export { getJVNfo } from "./getJVNfo";
 export { settings } from "./settings";
 export { writeJVItem } from "./writeItem";
-export { writeJVLog } from "./writeJVLog";
+export { logger } from "./logger";
