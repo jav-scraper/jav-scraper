@@ -1,4 +1,4 @@
-import { getJav321, getJavdb } from "./src/fetcher";
+import { getDmm, getJav321, getJavdb } from "./src/fetcher";
 import {
   getJVAggregatedData,
   getJVItem,
@@ -18,17 +18,18 @@ import {
   };
   const sources = await getJVItem({ options, settings });
   sources.forEach(async (source) => {
-    const data = await Promise.all([getJav321(source.Id), getJavdb(source.Id)]);
-    const aggregatedData = getJVAggregatedData({ data, settings });
-    const nfoString = getJVNfo(aggregatedData);
-    await writeJVItem({
-      id: aggregatedData.Id,
-      thumb: aggregatedData.CoverUrl,
-      poster: aggregatedData.PosterUrl,
-      screenshotUrl: aggregatedData.ScreenshotUrl,
-      nfoString,
-      source,
-      settings,
-    });
+    const hoge = await getDmm(source.Id);
+    // const data = await Promise.all([getJav321(source.Id), getJavdb(source.Id)]);
+    // const aggregatedData = getJVAggregatedData({ data, settings });
+    // const nfoString = getJVNfo(aggregatedData);
+    // await writeJVItem({
+    //   id: aggregatedData.Id,
+    //   thumb: aggregatedData.CoverUrl,
+    //   poster: aggregatedData.PosterUrl,
+    //   screenshotUrl: aggregatedData.ScreenshotUrl,
+    //   nfoString,
+    //   source,
+    //   settings,
+    // });
   });
 })();
