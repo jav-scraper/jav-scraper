@@ -48,10 +48,10 @@ export async function getJavdbData(url: string | null): Promise<MovieData> {
     return movieDataObject;
   }
   try {
-    logger.info({ source, url, msg: "start scraping" });
+    logger.debug({ source, url, msg: "start scraping" });
     const response = await fetch(url);
     const webContent = await response.text();
-    logger.info({ source, url, msg: "success scraping" });
+    logger.debug({ source, url, msg: "success scraping" });
     return {
       ...movieDataObject,
       Url: url,
@@ -75,7 +75,12 @@ export async function getJavdbData(url: string | null): Promise<MovieData> {
     };
   } catch (error: unknown) {
     if (error instanceof Error) {
-      logger.error({ source, url, error });
+      logger.error({
+        source,
+        url,
+        msg: "failure scraping",
+        error,
+      });
     }
   }
 

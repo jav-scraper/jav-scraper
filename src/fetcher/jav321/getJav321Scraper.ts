@@ -1,3 +1,4 @@
+import { JSDOM } from "jsdom";
 import { Actress } from "../../types";
 
 function extractValue(regex: RegExp, text: string): string | null {
@@ -85,19 +86,29 @@ export function getJav321Actress(webContent: string): Actress[] {
 }
 
 export function getJav321PosterUrl(webContent: string): string | null {
-  const regex = /<img class="img-responsive" max-width="100%" src="(.*?)"/;
-  return extractValue(regex, webContent)?.split('" onerror')[0].trim() || null;
+  const doc = new JSDOM(webContent).window.document;
+  const element = doc.querySelector(
+    "body > div:nth-child(3) > div.col-md-7.col-md-offset-1.col-xs-12 > div:nth-child(1) > div.panel-body > div:nth-child(1) > div.col-md-3 > img"
+  );
+  return element?.getAttribute("src")?.replace("pl", "ps") || "";
 }
 
 export function getJav321CoverUrl(webContent: string): string | null {
-  const regex =
-    /"\/snapshot\/.*?\/\d\/0"><img class="img-responsive" max-width="100%" src="(.*?)"/;
-  return extractValue(regex, webContent)?.split('" onerror')[0].trim() || null;
+  const doc = new JSDOM(webContent).window.document;
+  const element = doc.querySelector(
+    "body > div:nth-child(3) > div.col-md-3 > div:nth-child(1) > p > a > img"
+  );
+  return element?.getAttribute("src") || "";
 }
 
 export function getJav321ScreenshotUrl(webContent: string): string[] | null {
-  const regex =
-    /<a href="\/snapshot\/.*?\/.*?\/.*?"><img class="img-responsive" max-width="100%" src="(.*?)"/g;
-  const matches = [...webContent.matchAll(regex)];
-  return matches.map((match) => match[1]);
+  const doc = new JSDOM(webContent).window.document;
+  const elements = doc.querySelectorAll(
+    "body > div:nth-child(3) > div.col-md-3 > div:nth-child > p > a > img"
+  );
+  return Array.from(elements).map((element) => {
+    console.log(element.getAttribute("src"));
+
+    return element.getAttribute("src")?.replace("-", "jp-") || "";
+  });
 }

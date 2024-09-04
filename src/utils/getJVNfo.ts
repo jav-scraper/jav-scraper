@@ -30,7 +30,7 @@ export function getJVNfo({
   // Credits,
   TrailerUrl,
 }: AggregatedData) {
-  logger.info({ msg: "start generate nfo" });
+  logger.debug({ msg: "start generate nfo" });
   let nfoString = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <movie>
     <title>${Id}-${convertNfoChar(Title)}</title>
@@ -77,6 +77,6 @@ export function getJVNfo({
   });
 
   nfoString += `</movie>`;
-  logger.info({ msg: "success generate nfo" });
+  logger.debug({ msg: "success generate nfo" });
   return nfoString;
 }

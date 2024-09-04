@@ -45,10 +45,10 @@ export async function getJav321Data(url: string | null): Promise<MovieData> {
     return movieDataObject;
   }
   try {
-    logger.info({ source, url, msg: "start scraping" });
+    logger.debug({ source, url, msg: "start scraping" });
     const response = await fetch(url);
     const webContent = await response.text();
-    logger.info({ source, url, msg: "success scraping" });
+    logger.debug({ source, url, msg: "success scraping" });
     return {
       ...movieDataObject,
       Id: getJav321Id(webContent),
@@ -66,12 +66,17 @@ export async function getJav321Data(url: string | null): Promise<MovieData> {
       Genre: getJav321Genre(webContent),
       PosterUrl: getJav321PosterUrl(webContent),
       CoverUrl: getJav321CoverUrl(webContent),
-      ScreenshotUrl: getJav321ScreenshotUrl(webContent),
+      ScreenshotUrl: null,
       TrailerUrl: null,
     };
   } catch (error: unknown) {
     if (error instanceof Error) {
-      logger.error({ source, url, error });
+      logger.error({
+        source,
+        url,
+        msg: "failure scraping",
+        error,
+      });
     }
   }
 

@@ -36,7 +36,7 @@ export type Actress = {
   JapaneseName: string;
   ThumbUrl: null;
 };
-export type Source = "jav321" | "javdb";
+export type Source = "jav321" | "javdb" | "dmm";
 export type MovieData = {
   Source: Source;
   Url: string | null;

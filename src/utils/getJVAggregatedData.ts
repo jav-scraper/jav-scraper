@@ -9,7 +9,7 @@ export function getJVAggregatedData({
   data,
   settings,
 }: AggregatedDataOptions): AggregatedData {
-  logger.info({ msg: "start aggregate data" });
+  logger.debug({ msg: "start aggregate data" });
   const metadataPriorities = {
     Actress: settings["sort.metadata.priority.actress"],
     CoverUrl: settings["sort.metadata.priority.coverurl"],
@@ -74,6 +74,6 @@ export function getJVAggregatedData({
       }
     }
   }
-  logger.info({ msg: "success aggregate data" });
+  logger.debug({ msg: "success aggregate data" });
   return aggregatedDataObject;
 }

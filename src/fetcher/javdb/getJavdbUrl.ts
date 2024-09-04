@@ -13,10 +13,9 @@ export async function getJavdbUrl(
   let webContent;
 
   try {
-    logger.info({ source, url: searchUrl, msg: "start fetch" });
+    logger.debug({ source, url: searchUrl, msg: "start fetch" });
     const response = await fetch(searchUrl, { headers });
     webContent = await response.text();
-    logger.info({ source, url: searchUrl, msg: "success fetch" });
   } catch (error) {
     if (error instanceof Error) {
       logger.error({ source, url: searchUrl, error });
@@ -27,7 +26,12 @@ export async function getJavdbUrl(
       webContent = await response.text();
     } catch (retryError) {
       if (retryError instanceof Error) {
-        logger.error({ source, url: searchUrl, error });
+        logger.error({
+          source,
+          url: searchUrl,
+          msg: "failure fetch",
+          error: retryError,
+        });
       }
     }
   }
@@ -59,10 +63,15 @@ export async function getJavdbUrl(
       Id: entry.id,
       Title: entry.title,
     }));
-    logger.info({ source, url: searchUrl, msg: "success found" });
+    logger.debug({ source, url: searchUrl, msg: "success fetch" });
     return urlObject[0];
   } else {
-    logger.error({ source, url: searchUrl, error: new Error("not found") });
+    logger.error({
+      source,
+      url: searchUrl,
+      msg: "failure fetch",
+      error: new Error("not found"),
+    });
     return;
   }
 }

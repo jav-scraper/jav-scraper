@@ -11,7 +11,7 @@ export async function getJav321Url(
   const source: Source = "jav321";
 
   try {
-    logger.info({ source, url: searchUrl, msg: "start fetch" });
+    logger.debug({ source, url: searchUrl, msg: "start fetch" });
     const response = await fetch(searchUrl, {
       method: "POST",
       headers: {
@@ -21,22 +21,30 @@ export async function getJav321Url(
     });
     const searchResultUrl = response.url;
     const webContent = await response.text();
-    logger.info({ source, url: searchUrl, msg: "success fetch" });
-
     if (searchResultUrl.includes("/video/")) {
       try {
         const resultObject = {
-          Id: getJav321Id(webContent),
+          Id: id,
           Title: getJav321Title(webContent),
           Url: searchResultUrl,
         };
-        logger.info({ source, url: searchUrl, msg: "success found" });
+        logger.debug({ source, url: searchUrl, msg: "success fetch" });
         return resultObject;
       } catch (error) {
-        logger.error({ source, url: searchUrl, error });
+        logger.error({
+          source,
+          url: searchUrl,
+          msg: "failure fetch",
+          error,
+        });
       }
     }
   } catch (error) {
-    logger.error({ source, url: searchUrl, error });
+    logger.error({
+      source,
+      url: searchUrl,
+      msg: "failure fetch",
+      error,
+    });
   }
 }
