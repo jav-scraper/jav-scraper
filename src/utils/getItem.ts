@@ -1,41 +1,43 @@
 import * as fs from "fs";
 import * as path from "path";
 import { convertJVTitle } from "./convertTitle";
-import { Options, File, Title, Settings } from "../types";
+import { File, Title, Settings } from "../types";
 
 type Props = Readonly<{
-  options: Options;
   settings: Settings;
 }>;
 
 export async function getJVItem({
-  options,
   settings,
 }: Props): Promise<Title[]> {
-  const {
-    recurse = false,
-    depth = Infinity,
-    strict = false,
-    minimumFileSize = 0,
-    excludedStrings = [],
-    includedExtensions = [],
-  } = options;
+  const itemSettings = {
+    recurse: settings['web.sort.recurse'],
+    depth: settings['web.sort.recursedepth'],
+    strict: settings['web.sort.strict'],
+    minimumFileSize: settings['match.minimumfilesize'],
+    excludedStrings: settings['match.excludedfilestring'],
+    includedExtensions: settings['match.includedfileextension'],
+    regexEnabled: settings['match.regex'],
+    regexString: settings['match.regex.string'],
+    regexIdMatch: settings['match.regex.idmatch'],
+    regexPtMatch: settings['match.regex.ptmatch'],
+  }
 
-  const minimumFileSizeBytes = minimumFileSize * 1024 * 1024;
-  const excludedStringsRegex = new RegExp(excludedStrings.join("|"), "i");
+  const minimumFileSizeBytes = itemSettings.minimumFileSize * 1024 * 1024;
+  const excludedStringsRegex = new RegExp(itemSettings.excludedStrings.join("|"), "i");
   const includedExtensionsSet = new Set(
-    includedExtensions.map((ext) => ext.toLowerCase())
+    itemSettings.includedExtensions.map((ext) => ext.toLowerCase())
   );
 
   async function getFiles(dir: string, currentDepth: number): Promise<File[]> {
-    if (currentDepth > depth) return [];
+    if (currentDepth > itemSettings.depth) return [];
 
     const entries = await fs.promises.readdir(dir, { withFileTypes: true });
     const files: File[] = [];
 
     for (const entry of entries) {
       const fullPath = path.join(dir, entry.name);
-      if (entry.isDirectory() && recurse) {
+      if (entry.isDirectory() && itemSettings.recurse) {
         files.push(...(await getFiles(fullPath, currentDepth + 1)));
       } else if (entry.isFile()) {
         const ext = path.extname(entry.name).toLowerCase();
@@ -60,5 +62,5 @@ export async function getJVItem({
   }
   const locationInput = settings["location.input"];
   const files = await getFiles(locationInput, 0);
-  return convertJVTitle(files, strict);
+  return convertJVTitle(files, itemSettings.strict);
 }

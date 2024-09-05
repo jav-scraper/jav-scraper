@@ -1,11 +1,3 @@
-export type Options = {
-  recurse: boolean;
-  depth: number;
-  strict: boolean;
-  minimumFileSize: number;
-  excludedStrings: string[];
-  includedExtensions: string[];
-};
 export type File = {
   FullName: string;
   Name: string;

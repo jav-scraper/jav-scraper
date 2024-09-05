@@ -179,7 +179,7 @@ export const convertJVTitle = (files: File[], strict: boolean = false) => {
 
     if (strict) {
       dataObject.push({
-        Id: originalBaseName,
+        Id: movieId,
         ContentId: contentId,
         FileName: originalFileName,
         BaseName: originalBaseName,

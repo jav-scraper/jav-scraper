@@ -9,15 +9,7 @@ import {
 } from "./src/utils";
 
 (async () => {
-  const options = {
-    recurse: true,
-    depth: 2,
-    strict: true,
-    minimumFileSize: 1, // 1 MB
-    excludedStrings: ["example", "test"],
-    includedExtensions: [".mp4", ".mkv"],
-  };
-  const sources = await getJVItem({ options, settings });
+  const sources = await getJVItem({ settings });
   sources.forEach(async (source) => {
     const data = await Promise.all([
       getJav321(source.Id),
