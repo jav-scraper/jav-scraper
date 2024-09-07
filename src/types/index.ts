@@ -15,7 +15,7 @@ export type Title = {
   FullName: string;
   Extension: string;
   Length: number;
-  PartNumber: null;
+  PartNumber: number | null;
 };
 export type Url = {
   Url: string | null;
@@ -203,7 +203,6 @@ export type Settings = {
   "web.favorites.genre": string[];
   "web.favorites.tag": string[];
   "web.sort.recurse": boolean;
-  "web.sort.strict": boolean;
   "web.sort.interactive": boolean;
   "web.sort.update": boolean;
   "web.sort.force": boolean;

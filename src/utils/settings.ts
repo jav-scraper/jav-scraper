@@ -149,7 +149,6 @@ export const settings: Settings = {
   "web.favorites.genre": [],
   "web.favorites.tag": [],
   "web.sort.recurse": true,
-  "web.sort.strict": true,
   "web.sort.interactive": true,
   "web.sort.update": false,
   "web.sort.force": false,

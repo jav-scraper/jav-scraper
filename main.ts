@@ -19,7 +19,6 @@ import {
     const aggregatedData = getJVAggregatedData({ data, settings });
     const nfoString = getJVNfo(aggregatedData);
     await writeJVItem({
-      id: aggregatedData.Id,
       thumb: aggregatedData.CoverUrl,
       poster: aggregatedData.PosterUrl,
       screenshotUrl: aggregatedData.ScreenshotUrl,

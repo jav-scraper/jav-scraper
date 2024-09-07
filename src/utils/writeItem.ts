@@ -4,7 +4,6 @@ import fetch from "node-fetch";
 import { logger } from "./logger";
 
 type Props = Readonly<{
-  id: string | null;
   thumb: string | null;
   poster: string | null;
   screenshotUrl: string[] | null;
@@ -14,7 +13,6 @@ type Props = Readonly<{
 }>;
 
 export const writeJVItem = async ({
-  id,
   thumb,
   poster,
   screenshotUrl,
@@ -22,11 +20,11 @@ export const writeJVItem = async ({
   source,
   settings,
 }: Props): Promise<void> => {
-  logger.debug({ id, msg: "start writing" });
+  logger.debug({ id: source.Id, msg: "start writing" });
   const locationOutput = settings["location.output"];
-  const outputPath = `${locationOutput}/${id}`;
-  const outputFullName = `${outputPath}/${source.FileName}`;
-  const outputNfoFullName = `${outputPath}/${source.BaseName}.nfo`;
+  const outputPath = `${locationOutput}/${source.Id}`;
+  const outputFullName = `${outputPath}/${source.Id}${source.Extension}`;
+  const outputNfoFullName = `${outputPath}/${source.Id}.nfo`;
 
   fs.mkdirSync(outputPath, { recursive: true });
   fs.renameSync(source.FullName, outputFullName);
@@ -51,5 +49,5 @@ export const writeJVItem = async ({
       fs.writeFileSync(screenshotPath, await result.buffer(), "binary");
     });
   }
-  logger.debug({ id, msg: "success writing" });
+  logger.debug({ id: source.Id, msg: "success writing" });
 };

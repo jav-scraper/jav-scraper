@@ -7,24 +7,24 @@ type Props = Readonly<{
   settings: Settings;
 }>;
 
-export async function getJVItem({
-  settings,
-}: Props): Promise<Title[]> {
+export async function getJVItem({ settings }: Props): Promise<Title[]> {
   const itemSettings = {
-    recurse: settings['web.sort.recurse'],
-    depth: settings['web.sort.recursedepth'],
-    strict: settings['web.sort.strict'],
-    minimumFileSize: settings['match.minimumfilesize'],
-    excludedStrings: settings['match.excludedfilestring'],
-    includedExtensions: settings['match.includedfileextension'],
-    regexEnabled: settings['match.regex'],
-    regexString: settings['match.regex.string'],
-    regexIdMatch: settings['match.regex.idmatch'],
-    regexPtMatch: settings['match.regex.ptmatch'],
-  }
+    recurse: settings["web.sort.recurse"],
+    depth: settings["web.sort.recursedepth"],
+    minimumFileSize: settings["match.minimumfilesize"],
+    excludedStrings: settings["match.excludedfilestring"],
+    includedExtensions: settings["match.includedfileextension"],
+    regexEnabled: settings["match.regex"],
+    regexString: settings["match.regex.string"],
+    regexIdMatch: settings["match.regex.idmatch"],
+    regexPtMatch: settings["match.regex.ptmatch"],
+  };
 
   const minimumFileSizeBytes = itemSettings.minimumFileSize * 1024 * 1024;
-  const excludedStringsRegex = new RegExp(itemSettings.excludedStrings.join("|"), "i");
+  const excludedStringsRegex = new RegExp(
+    itemSettings.excludedStrings.join("|"),
+    "i"
+  );
   const includedExtensionsSet = new Set(
     itemSettings.includedExtensions.map((ext) => ext.toLowerCase())
   );
@@ -62,5 +62,5 @@ export async function getJVItem({
   }
   const locationInput = settings["location.input"];
   const files = await getFiles(locationInput, 0);
-  return convertJVTitle(files, itemSettings.strict);
+  return convertJVTitle(files);
 }
