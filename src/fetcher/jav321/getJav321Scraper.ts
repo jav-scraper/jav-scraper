@@ -85,14 +85,6 @@ export function getJav321Actress(webContent: string): Actress[] {
   }));
 }
 
-export function getJav321PosterUrl(webContent: string): string | null {
-  const doc = new JSDOM(webContent).window.document;
-  const element = doc.querySelector(
-    "body > div:nth-child(3) > div.col-md-7.col-md-offset-1.col-xs-12 > div:nth-child(1) > div.panel-body > div:nth-child(1) > div.col-md-3 > img"
-  );
-  return element?.getAttribute("src")?.replace("pl", "ps") || "";
-}
-
 export function getJav321CoverUrl(webContent: string): string | null {
   const doc = new JSDOM(webContent).window.document;
   const element = doc.querySelector(

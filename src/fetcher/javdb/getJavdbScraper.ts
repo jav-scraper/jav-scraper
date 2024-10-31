@@ -139,11 +139,6 @@ export function getJavdbActress(webContent: string): Actress[] | null {
     : null;
 }
 
-export function getJavdbPosterUrl(webContent: string): string | null {
-  const javdbCoverUrl = getJavdbCoverUrl(webContent);
-  return javdbCoverUrl?.replace("covers", "thumbs") || null;
-}
-
 export function getJavdbCoverUrl(webContent: string): string | null {
   const doc = new JSDOM(webContent).window.document;
   const element = doc.querySelector("img.video-cover");

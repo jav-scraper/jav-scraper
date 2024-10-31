@@ -51,7 +51,6 @@ export type AggregatedData = {
   Actress: Actress[] | null;
   Genre: string[] | null;
   CoverUrl: string | null;
-  PosterUrl: string | null;
   ScreenshotUrl: string[] | null;
   TrailerUrl: string | null;
   // Tagline: string | null;
@@ -233,8 +232,8 @@ export type Settings = {
   "admin.updates.check": boolean;
 };
 export type Rating = {
-  Rating: number;
-  Votes: null;
+  Rating: string;
+  Votes: string;
 };
 export type AggregatedDataOptions = {
   data: MovieData[];

@@ -20,7 +20,6 @@ import {
     const nfoString = getJVNfo(aggregatedData);
     await writeJVItem({
       thumb: aggregatedData.CoverUrl,
-      poster: aggregatedData.PosterUrl,
       screenshotUrl: aggregatedData.ScreenshotUrl,
       nfoString,
       source,

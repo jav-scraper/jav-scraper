@@ -51,7 +51,6 @@ export function getJVAggregatedData({
     Director: null,
     Actress: null,
     Genre: null,
-    PosterUrl: null,
     CoverUrl: null,
     ScreenshotUrl: null,
     TrailerUrl: null,

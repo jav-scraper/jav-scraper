@@ -1,11 +1,10 @@
 import fs from "fs";
 import { Settings, Title } from "../types";
 import fetch from "node-fetch";
-import { logger } from "./logger";
+import { logger, cropImage } from "./";
 
 type Props = Readonly<{
   thumb: string | null;
-  poster: string | null;
   screenshotUrl: string[] | null;
   nfoString: string;
   source: Title;
@@ -14,7 +13,6 @@ type Props = Readonly<{
 
 export const writeJVItem = async ({
   thumb,
-  poster,
   screenshotUrl,
   nfoString,
   source,
@@ -32,14 +30,12 @@ export const writeJVItem = async ({
 
   if (thumb) {
     const thumbPath = `${outputPath}/thumb.jpg`;
+    const posterPath = `${outputPath}/poster.jpg`;
     const result = await fetch(thumb);
     fs.writeFileSync(thumbPath, await result.buffer(), "binary");
+    await cropImage(thumbPath, posterPath);
   }
-  if (poster) {
-    const posterPath = `${outputPath}/poster.jpg`;
-    const result = await fetch(poster);
-    fs.writeFileSync(posterPath, await result.buffer(), "binary");
-  }
+
   if (screenshotUrl) {
     const extrafanartPath = `${outputPath}/extrafanart`;
     fs.mkdirSync(extrafanartPath, { recursive: true });
